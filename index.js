@@ -35,9 +35,15 @@ wss.on('connection', (ws) => {
     }
   });
 });
-app.get('/', (req, res) => {
-    res.send("GET Request Called")
-})
+app.post('/api/endpoint', (req, res) => {
+    const { latitude, longitude } = req.body;
+    console.log('Received location data:', { latitude, longitude });
+
+    // Process the data as needed (save to a database, perform other actions, etc.)
+
+    // Send a response if necessary
+    res.json({ message: 'Location data received successfully' });
+});
 app.use(express.static('public'));
 
 server.listen(4000, () => {
