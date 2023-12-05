@@ -1,0 +1,35 @@
+<!-- public/device2.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device 2</title>
+</head>
+<body>
+    <h1>Device 2</h1>
+
+    <div id="displayLocation"></div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:4000');
+
+        // Handle incoming messages from the server
+        socket.onmessage = (event) => {
+            try {
+                const parsedMessage = JSON.parse(event.data);
+
+                if (parsedMessage.type === 'location') {
+                    const displayLocationDiv = document.getElementById('displayLocation');
+                    const { latitude, longitude } = parsedMessage.data;
+
+                    displayLocationDiv.innerHTML = `<p>Latest Location: (${latitude}, ${longitude})</p>`;
+                }
+            } catch (error) {
+                console.error('Error parsing message:', error);
+            }
+        };
+    </script>
+</body>
+</html>

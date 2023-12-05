@@ -1,0 +1,34 @@
+<!-- public/device1.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device 1</title>
+</head>
+<body>
+    <h1>Device 1</h1>
+
+    <button onclick="sendLocation()">Send Location</button>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:4000');
+
+        function sendLocation() {
+            // Get the device's current location
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const { latitude, longitude } = position.coords;
+
+                    // Send location to the server
+                    socket.send(JSON.stringify({ type: 'location', data: { latitude, longitude } }));
+                },
+                error => {
+                    console.error('Error getting location:', error);
+                }
+            );
+        }
+    </script>
+</body>
+</html>
