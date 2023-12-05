@@ -35,7 +35,9 @@ wss.on('connection', (ws) => {
     }
   });
 });
-
+app.get('/', (req, res) => {
+    res.send("GET Request Called")
+})
 app.use(express.static('public'));
 
 server.listen(4000, () => {
